@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>calendar.html</title>
+</head>
+
+<body>
+    <script>
+        // var month = 4;
+        var today = new Date(2021, 4, 1);
+        console.log(today.getDay());
+        var lastDay = new Date(2021, 4, 0);
+        console.log(lastDay.getDate());
+
+        var days=['sun', 'mon', 'tue', 'wed', 'thr', 'fri', 'sta'];
+        var tbl = '<table border="1"><tr>';
+            // tb1 += '<caption>' + '4월</caption>';
+            for(day of days){
+                tbl += '<th>' + day + '</th>';
+            }
+        tbl += '</tr>';
+        
+        tbl += '<td></td><td></td><td></td><td></td>';
+        for(var i = 1; i<=30; i++){
+            if(i)
+            tbl += '<td>' + i +'</td>';
+            if(i%7 == 3){
+                tbl += '</tr><tr>';
+            }
+        }
+        tbl += '</tr>';
+    tbl += '<table>';
+
+    document.write(tbl);
+    </script>
+</body>
+
+</html>
