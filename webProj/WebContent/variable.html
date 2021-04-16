@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>variable.html</title>
+	<style>
+		ul>li#second {
+			background-color: blue;
+		}
+	</style>
+</head>
+
+<body>
+	<!-- <script src="script/obj.js"></script>
+	<script src="script/obj2.js"></script> -->
+	<script src="script/function.js"></script>
+	<script>
+		// var tableTag = '<table border="1">'; //2단에서 9단까지 전부 출력
+		// for (var i = 2; i <= 9; i++) {
+		// 	for (var j = 1; j <= 9; j++) {
+		// 		var result = i * j;
+		// 		tableTag += '<tr><td>' + i  + '*' + j + '</td><td>' + '=' + '</td><td>' + result + '</td></tr>';
+		// 	}
+		// }
+
+		var tableTag = '<table border="1">'; //2단만 출력
+		for (var i = 1; i <= 10; i++) {
+				tableTag += '<tr><td>' + '2'  + '*' + i + '</td><td>' + '=' + '</td><td>' + (2*i) + '</td></tr>';
+			}
+
+		tableTag += '</table>';
+		document.write(tableTag);
+	</script>
+</body>
+
+</html>
