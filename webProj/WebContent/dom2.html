@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>dom2.html</title>
+</head>
+
+<body>
+    <table id="td1" border="1">
+        <tbody>
+            <tr>
+                <th>이름</th>
+                <th>점수</th>
+                <th>기능</th>
+            </tr>
+            <tr>
+                <td id='Hong'>Hong</td>
+                <td>88</td>
+                <td><button>삭제1</button></td>
+            </tr>
+            <tr>
+                <td id='Hwang'>Hwang</td>
+                <td>90</td>
+                <td><button>삭제2</button></td>
+            </tr>
+        </tbody>
+    </table>
+    <script>
+        var bt = document.querySelectorAll('tr>td>button'); //특정 위치의 태그만 끌고와 설정하고 싶을땐
+        //document.querySelectorAll(); 사용
+        for (var i = 0; i < bt.length; i++) {
+            bt[i].onclick = function () {
+                // console.log(this.parentNode.previousSibling.previousSibling);  //this: 온클릭 이벤트를 받는 엘리먼트(속성)
+                // console.log(this.parentNode.parentNode.childNodes[1].firstChild.nodeValue); //버튼을 누르면 특정 위치의 값 호출 
+                var delVal = this.parentNode.parentNode.childNodes[1].firstChild.nodeValue;
+                delFunc(delVal); //DB삭제기능 호출
+                this.parentNode.parentNode.remove();
+                
+            }
+        }
+        console.log(bt);
+
+        function delFunc(val){ //DB삭제기능 구현
+            console.log(val + ' 삭제됨');
+        }
+    </script>
+</body>
+
+</html>

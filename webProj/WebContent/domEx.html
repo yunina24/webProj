@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>domEx.html</title>
+    <script src="script/domEx.js"></script>
+    <script>
+        var tbl = document.getElementById('tbl');
+
+        document.addEventListener('DOMContentLoaded', function () { //페이지가 다 실행된 다음 실행
+            //table과 data 호출
+            createTitle('이름', '아이디', '성적', '성별', '기능');
+            createData();
+
+             //저장버튼 클릭시
+             var saveBt = document.getElementById('saveBt');
+            saveBt.addEventListener('click', saveBtFnc);
+
+            //수정버튼 클릭시
+            var modifyBt = document.getElementById('modifyBt');
+            modifyBt.addEventListener('click', modifyBtFnc);
+        });
+        // window.onload = function(){} //on~:이벤트속성 //페이지가 다 실행된 다음 실행
+    </script>
+</head>
+
+<body>
+    <div>
+        <div>이&#32;&#32;름: <input type="text" name="name" id="name" value="Kim"></div>
+        <div>아이디: <input type="text" name="id" id="id" value="user5"></div>
+        <div>점&#32;&#32;수: <input type="text" name="score" id="score" value="77"></div>
+        <div>성&#32;&#32;별: <input type="radio" name="gender" value="남" checked>남성
+            <input type="radio" name="gender" value="여">여성
+        </div>
+        <div>
+            <button id="saveBt">저장</button>
+            <button id="modifyBt">수정</button>
+        </div>
+    </div>
+    <hr noshade>
+    <table id='tbl' border="1">
+        <caption>회원목록</caption>
+    </table>
+    <!-- <table border='1'>
+        <tr>
+            <th>이름</th>
+            <th>아이디</th>
+            <th>점수</th>
+            <th>성별</th>
+            <th>기능</th>
+        </tr>
+    </table> -->
+    <script>
+        // var h = {
+        //     name: '이름',
+        //     id: '아이디',
+        //     score: '점수',
+        //     gender: '성별',
+        //     fucn: '기능'
+        // }
+        var p1 = {
+            name: 'Hong',
+            id: 'user1',
+            score: 80,
+            gender: '남'
+        }
+        var p2 = {
+            name: 'Park',
+            id: 'user2',
+            score: 89,
+            gender: '남'
+        }
+        var p3 = {
+            name: 'Choi',
+            id: 'user3',
+            score: 95,
+            gender: '여'
+        }
+        var p4 = {
+            name: 'Yun',
+            id: 'user4',
+            score: 90,
+            gender: '여'
+        }
+        var persons = [p1, p2, p3, p4];
+        var tbl = document.getElementById('tbl');
+
+
+
+
+        
+        //    내가 작성한 답안지
+        // function showTable() {
+        //     var tableTag = document.createElement('table');
+        //     tableTag.setAttribute('border', '1');
+
+        //     var btTag = document.createElement('button');
+        //     btTag.innerHTML = '삭제'
+
+        //     for (var p of persons) { //배열의 개수만큼 반복하여 출력
+        //         var tr1 = document.createElement('tr');
+
+        //         var th1 = document.createElement('th');
+        //         th1.innerHTML = h.name;
+        //         var th2 = document.createElement('th');
+        //         th2.innerHTML = h.id;
+        //         var th3 = document.createElement('th');
+        //         th3.innerHTML = h.score;
+        //         var th4 = document.createElement('th');
+        //         th4.innerHTML = h.gender;
+        //         var th5 = document.createElement('th');
+        //         th5.innerHTML = h.fucn;
+        //     }
+
+
+        //     for (var p of persons) { 
+        //         var tr2 = document.createElement('tr');
+        //         var td1 = document.createElement('td');
+        //         td1.innerHTML = p.name;
+        //         var td2 = document.createElement('td');
+        //         td2.innerHTML = p.id;
+        //         var td3 = document.createElement('td');
+        //         td3.innerHTML = p.score;
+        //         var td4 = document.createElement('td');
+        //         td4.innerHTML = p.gender;
+        //         var td5 = document.createElement('td');
+        //         td5.innerHTML = btTag;
+
+        //         tableTag.appendChild(tr1);
+        //         tableTag.appendChild(tr2);
+        //         tr1.appendChild(th1);
+        //         tr1.appendChild(th2);
+        //         tr1.appendChild(th3);
+        //         tr1.appendChild(th4);
+        //         tr1.appendChild(th5);
+        //         tr2.appendChild(td1);
+        //         tr2.appendChild(td2);
+        //         tr2.appendChild(td3);
+        //         tr2.appendChild(td4);
+        //         tr2.appendChild(td5);
+        //     }
+        //     var show = document.getElementById('show');
+        //     show.appendChild(tableTag);
+        // }
+
+        //     showTable();
+    </script>
+</body>
+
+</html>
