@@ -30,16 +30,16 @@ function createData() {
         trTag.onmouseout = mouseOutFnc;
 
         for (var field in ps) { //4번 반복하는 필드라는 이름의 변수 선언
-            if (field == 'id') {
+            if (field == 'id') { //아이디칸을 클릭하면...회원정보 수정 이벤트
                 var tdTag = document.createElement('td');
                 tdTag.onclick = modifyFnc; //수정버튼 기능 호출
                 var text = document.createTextNode(ps[field]);
                 trTag.appendChild(tdTag);
                 tdTag.appendChild(text);
-            } else if (field == 'name') {
+            } else if (field == 'name') { //이름칸을 클릭하면...해당 링크로 연결
                 var tdTag = document.createElement('td');
                 var link = document.createElement('a');
-                link.setAttribute('href', 'dom.jsp?name=' + ps.name + '&id='+ps.id + '&score='+ps.score+'&gender=' + ps.gender);
+                link.setAttribute('href', "dom.jsp?name=" + ps.name + "&id=" + ps.id + "&score=" + ps.score + "&gender=" + ps.gender);
                 link.innerHTML = ps.name;
                 trTag.appendChild(tdTag);
                 tdTag.appendChild(link);
@@ -79,7 +79,7 @@ function deleteRow() {
 
 function modifyFnc() { //수정할 데이타의 아이디를 클릭하면 입력창에 호출
     var idVal = this.innerHTML;
-    var nameVal = this.previousSibling.innerHTML;
+    var nameVal = this.previousSibling.childNodes[0].innerHTML;
     var scoreVal = this.nextSibling.innerHTML;
     var genderVal = this.parentNode.childNodes[3].innerHTML;
 
@@ -140,9 +140,13 @@ function saveBtFnc() {
 
 function modifyBtFnc() { //수정할 데이타를 호출하여 수정한 뒤 등록
     var id = document.getElementById('id').value;
-    var targetTr = document.getElementById(id);
-    targetTr.children[0].innerHTML = document.getElementById('name').value;
-    targetTr.children[2].innerHTML = document.getElementById('score').value;
-    targetTr.children[3].innerHTML = document.querySelector('input[name="gender"]:checked').value;
+    var name =  document.getElementById('name').value;
+    var score = document.getElementById('score').value;
+    var gender = document.querySelector('input[name="gender"]:checked').value;
     console.log(targetTr);
+
+    var targetTr = document.getElementById(id); //아이디로 해당 tr의 정보 전부호출
+    targetTr.children[0].innerHTML = '<a href = "dom.jsp?name=" + name + "&id=" + id + "&score=" + score + "&gender=" + gender> '+ name +' </a>'
+    targetTr.children[2].innerHTML = score;
+    targetTr.children[3].innerHTML = gender;
 }

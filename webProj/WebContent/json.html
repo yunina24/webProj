@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>json.html</title>
+</head>
+
+<body>
+    <script>
+        var myObj = { //오브젝트 타입
+            name: 'John',
+            age: 31,
+            city: 'New York'
+        };
+        //JSON<- JavaScript Object Notation
+        //오브젝트 타입을 텍스트로 바꾼 것을 제이슨이라고 함
+        var jsonObj = '{"name" : "Jonh","age" : "31","city" : "New York"}';
+
+        //parse: JSON을 오브젝트로 만들어주는...
+        var data = JSON.parse(jsonObj);
+        //stringify: 오브젝트를 제이슨으로 ...
+        var json = JSON.stringify(data);
+        console.log(jsonObj);
+        console.log(json);
+
+        //서버에서 받아온 사원 데이타...
+        var mockData =
+            '[{"id":1,"first_name":"Kermie","last_name":"Goodredge","email":"kgoodredge0@accuweather.com","gender":"Male","ip_address":"35.154.116.225"},{"id":19,"first_name":"Lib","last_name":"Androli","email":"landrolii@networksolutions.com","gender":"Bigender","ip_address":"244.56.14.72"},{"id":20,"first_name":"Jacinthe","last_name":"Brierly","email":"jbrierlyj@goo.gl","gender":"Agender","ip_address":"233.62.190.181"}]';
+        var mockObj = JSON.parse(mockData);
+
+        var table = document.createElement('table');
+        table.setAttribute('border', '1');
+        var cap = document.createElement('caption');
+        cap.innerHTML = "사원목록";
+        table.appendChild(cap);
+        for (var i = 0; i < mockObj.length; i++) {
+            var tr = document.createElement('tr');
+            for (field in mockObj[i]) {
+                var td = document.createElement('td');
+                var text = document.createTextNode(mockObj[i][field]);
+                td.appendChild(text);
+                tr.appendChild(td);
+            }
+            table.appendChild(tr);
+        }
+        document.body.appendChild(table);
+
+        console.log(mockObj);
+
+        // var strObj = 'name: John, age: 31, city: New York';
+        // var position = strObj.indexOf('name');
+        // var name = strObj.substring(5, 9); //위처럼 데이타가 쭉 들어가면 특정 위치에서 호출한다고 만들어야함
+    </script>
+</body>
+
+</html>
