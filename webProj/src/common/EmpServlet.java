@@ -32,11 +32,13 @@ public class EmpServlet extends HttpServlet{
 		String jsonData = "[";
 		int cnt = 0;
 		for(Employee emp : list) {
-			jsonData += "{\"empId\":\"" + emp.getEmployeeId() 
-						+ "\", \"fName\":\"" + emp.getFirstName() 
-						+ "\", \"lName\":\"" + emp.getLastName()
-						+ "\", \"email\":\"" + emp.getEmail()
-						+ "\", \"salary\":\"" + emp.getSalary()
+			jsonData += "{\"empId\":\"" + emp.getEmployeeId()//
+						+ "\", \"fName\":\"" + emp.getFirstName()//
+						+ "\", \"lName\":\"" + emp.getLastName()//
+						+ "\", \"email\":\"" + emp.getEmail()//
+						+ "\", \"hrieDate\":\"" + emp.getHireDate()//
+						+ "\", \"jId\":\"" + emp.getJobId()//
+						+ "\", \"salary\":\"" + emp.getSalary()//
 						+ "\"}";
 			if(++cnt == list.size()) {
 				continue;
@@ -50,20 +52,34 @@ public class EmpServlet extends HttpServlet{
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String firstName = req.getParameter("first_name");
 		String lastName = req.getParameter("last_name");
 		String email = req.getParameter("email");
 		String hireDate = req.getParameter("hire_date");
 		String jobId = req.getParameter("job_id");
+		String salary = req.getParameter("salary");
+		int sal = Integer.parseInt(salary);
 		
 		Employee emp = new Employee();
+		emp.setFirstName(firstName);
 		emp.setLastName(lastName);
 		emp.setEmail(email);
 		emp.setHireDate(hireDate);
 		emp.setJobId(jobId);
+		emp.setSalary(sal);
 		
 		EmpDAO dao = new EmpDAO();
-		dao.insertEmp(emp);
+		Employee emp1 = dao.insertEmpBySeq(emp);
 		
-		resp.getWriter().print("<h1>Success</h1>");
+		// { "eid":"?","fName":"?", ... }
+		PrintWriter out = resp.getWriter();
+		out.print("{\"employee_id\":\"" + emp1.getEmployeeId() + "\","//
+				+ "\"first_name\":\"" + emp1.getFirstName() +"\","//
+				+ "\"last_name\":\"" + emp1.getLastName() + "\","//
+				+ "\"email\":\"" + emp1.getEmail() + "\","//
+				+ "\"hire_date\":\"" + emp1.getHireDate() + "\","//
+				+ "\"job_id\":\"" + emp1.getJobId() + "\","//
+				+ "\"salary\":\"" + emp1.getSalary() + "\""
+				+ "}");
 	}
 }

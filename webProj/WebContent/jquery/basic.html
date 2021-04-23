@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>basic.html</title>
+<style>
+	#sec1>h1{
+	  background-color: gold;
+	  }
+</style>
+<script src="../js/jquery-3.6.0.min.js"></script>
+<script>
+	$(document).ready(function(){ //페이지 전부 실행 후 여길 읽을 준비가 되면 실행해주세요...
+		sec1 = $('#sec1');
+		console.log(sec1.children().eq(0).html());
+		
+		$('#sec1>h1').css('color', 'white');
+		$('.sec1>ul>li').css('color', 'orange');
+		$('.sec1>ul>li').eq(1).css('color', 'red');
+		$('li').eq(0).parents().css('background-color', 'silver'); //parent해당 요소의 상위(부모)|parents 해당요소의 최상의요소
+	}); 
+</script>
+</head>
+<body>
+	<h1>Apple</h1>
+	<section id='sec1'>
+		<h1>Banana</h1>
+		<ul>
+			<li>Yellow</li>
+			<li>Red</li>
+		</ul>
+	</section>
+	<section class='sec1'>
+		<h1>Cherry</h1>
+		<ul>
+			<li>Yellow</li>
+			<li>Red</li>
+		</ul>
+	</section>
+</body>
+</html>

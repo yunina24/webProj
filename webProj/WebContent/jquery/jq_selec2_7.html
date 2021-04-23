@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jq_selec2_7.html</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        //var은 적당히 변수 체크해서 중복되도 제일 마지막으로 변수 담음
+        //let은 변수 중복까지 체크해준다, 중복된 변수 있으면 오류 뜸
+        //const는 값을 고정시킨다. 해당 변수 선언 후 동일 변수 있으면 오류 뜸
+        
+        // const num1 = 10;
+        // {
+        //     let num1 = 20;
+        //     console.log(num1);
+        // }
+        // num1 = 30;
+        // console.log(num1);
+        // function variableFunc(){
+        //     var num1;
+        // }
+
+        const num1 = {
+            name: 'Hong',
+            age: 10
+        };
+        const num2 = {
+            name: 'Yun',
+            age: 24
+        };
+        const num3 = {
+            name: 'Kim',
+            age: 19
+        };
+        const numbers = [num1, num2, num3];
+        
+        $(numbers).each(function(idx, val){ //배열에 담긴 수만큼 반복 ==forEach
+            console.log(idx, val.name, val.age);
+        }); 
+        
+        const names = $(numbers).map(function(a, b){
+            console.log(a, b);
+            return b.name;
+        });
+        console.log(names);
+
+        const ages = $.grep(numbers, function(val, idx){
+            console.log(val, idx);
+            return val.age == 19;
+        });
+        console.log(ages);
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

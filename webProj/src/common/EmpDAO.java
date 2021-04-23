@@ -20,7 +20,7 @@ public class EmpDAO {
 		Employee emp1 = new Employee();
 		
 		String sql1 = "SELECT EMPLOYEES_SEQ.NEXTVAL FROM DUAL";
-		String sql2 = "insert into emp_temp(employee_id, last_name, email, hire_date, job_id) values (?, ?, ?, ?, ?)";
+		String sql2 = "insert into emp_temp(employee_id,first_name, last_name, email, hire_date, job_id, salary) values (?, ?, ?, ?, ?, ?, ?)";
 		
 			try {
 				int empId = 0;
@@ -32,25 +32,32 @@ public class EmpDAO {
 				
 				psmt = conn.prepareStatement(sql2);
 				psmt.setInt(1, empId);
-				psmt.setString(2, emp.getLastName());
-				psmt.setString(2, emp.getEmail());
-				psmt.setString(2, emp.getHireDate());
-				psmt.setString(2, emp.getJobId());
+				psmt.setString(2, emp.getFirstName());
+				psmt.setString(3, emp.getLastName());
+				psmt.setString(4, emp.getEmail());
+				psmt.setString(5, emp.getHireDate());
+				psmt.setString(6, emp.getJobId());
+				psmt.setInt(7, emp.getSalary());
+				
 				
 				int r = psmt.executeUpdate();
 				System.out.println(r + "건 입력되었습니다.");
-				
+
+				 // ↓입력한 값을 반환해주기 위함.
 				emp1.setEmployeeId(empId);
+				emp1.setFirstName(emp.getFirstName());
 				emp1.setLastName(emp.getLastName());
 				emp1.setEmail(emp.getEmail());
 				emp1.setHireDate(emp.getHireDate());
-				emp1.setJobId(emp.getJobId());
+		        emp1.setJobId(emp.getJobId());
+		        emp1.setSalary(emp.getSalary());
+
 				
 				
 			} catch (SQLException e) {
 				e.printStackTrace();
 			} 
-		return null;
+		return emp1; //신규 등록한 정보를 아래 테이블에 노출하기 위해 emp1로 return
 	}
 	
 	public List<Employee> getEmpByDept(String dept){
@@ -68,6 +75,8 @@ public class EmpDAO {
 				emp.setFirstName(rs.getString("first_name"));
 				emp.setLastName(rs.getString("last_name"));
 				emp.setEmail(rs.getString("email"));
+				emp.setHireDate(rs.getString("hire_date"));
+				emp.setJobId(rs.getString("job_id"));
 				emp.setSalary(rs.getInt("salary"));
 				
 				employees.add(emp);
@@ -118,6 +127,8 @@ public class EmpDAO {
 				emp.setFirstName(rs.getString("first_name"));
 				emp.setLastName(rs.getString("last_name"));
 				emp.setEmail(rs.getString("email"));
+				emp.setHireDate(rs.getString("hire_date"));
+				emp.setJobId(rs.getString("job_id"));
 				emp.setSalary(rs.getInt("salary"));
 				
 				employees.add(emp);
@@ -154,14 +165,16 @@ public class EmpDAO {
 }
 
 	public void insertEmp(Employee emp) {
-		String sql = "insert into emp_temp(employee_id, last_name, email, hire_date, job_id) values ((select max(employee_id)+1 from emp_temp), ?, ?, ?, ?)";
+		String sql = "insert into emp_temp(employee_id, first_name, last_name, email, hire_date, job_id, salary, department_id) values ((select max(employee_id)+1 from emp_temp), ?, ?, ?, ?, ?, ?, 50)";
 		conn = DBCon.getConnect();
 		try {
 			psmt = conn.prepareStatement(sql);
-			psmt.setString(1, emp.getLastName());
-			psmt.setString(2, emp.getEmail());
-			psmt.setString(3, emp.getHireDate());
-			psmt.setString(4, emp.getJobId());
+			psmt.setString(1, emp.getFirstName());
+			psmt.setString(2, emp.getLastName());
+			psmt.setString(3, emp.getEmail());
+			psmt.setString(4, emp.getHireDate());
+			psmt.setString(5, emp.getJobId());
+			psmt.setInt(6, emp.getSalary());
 			
 			int r = psmt.executeUpdate();
 			System.out.println(r + "건 입력되었습니다.");
