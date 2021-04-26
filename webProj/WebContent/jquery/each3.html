@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>each3.html</title>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () { //도큐먼트 준비되면=화면출력이 다 되면
+            $.ajax({ //에이작스 XMLHttp~, open, send코드 불필요해짐
+                url: '../MOCK_DATA.json', //오픈하고 싶은 링크소스
+                dataType: 'json', //원래는 타입 데이타 타입 지정해야함
+                success: successCallFunc,
+                error: errorFunc
+            });
+
+        });
+
+        function successCallFunc(resolve) {
+            console.log(resolve);
+            let tbl = $('<table />');
+            tbl.attr('border', '1'); //attr:속성값 정하는 속성
+            $.each(resolve, function (i, o) {
+                let tr = $('<tr />');
+                tr.attr('id', o.id);
+                tr.mouseover(mouseoverFunc);
+                tr.mouseout(mouseoutFunc);
+                let btn = $('<button />').html('Del');
+                btn.click((event) => { //function은 이벤트 대상, =>는 오브젝트값을 가져온다.
+                    console.log($(this), event);
+                    event.currentTarget.parentNode.parentNode.remove();
+                });
+                tr.append(
+                    $('<td />').html(o.id),
+                    $('<td />').html(o.first_name),
+                    $('<td />').html(o.last_name),
+                    $('<td />').html(o.email),
+                    $('<td />').append(btn)
+                );
+                tbl.append(tr);
+            });
+            // console.log(contents);
+            // $('#show').html(contents);
+            $('#show').append(tbl);
+        };
+
+        function clickFunc() {
+            alert($(this).attr('id'));
+        };
+
+        function errorFunc() {
+            console.log(reject);
+        };
+
+        function mouseoverFunc() {
+            $(this).css('background-color', 'gold');
+        };
+
+        function mouseoutFunc() {
+            $(this).css('background-color', '');
+        };
+    </script>
+</head>
+
+<body>
+    <div id='show'></div>
+</body>
+
+</html>

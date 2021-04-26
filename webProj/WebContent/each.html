@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>each.html</title>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <style>
+        div:nth-child(1){
+            color:rgb(0,0,255);
+        }
+    </style>
+</head>
+<body>
+    <div>contents1</div>
+    <div>contents2</div>
+    <div>contents3</div>
+
+    <script>
+        $(document.body).click(function(){ //html의 body를 불러와 클릭 매소드(클릭이벤트)
+            $('div').each(function(i,o){
+                console.log($(this));
+                if($(this).css('color')!=='rgb(0,0,255)'){
+                    $(this).css('color', 'rgb(0,0,255)');
+                  } else {
+                    $(this).css('color', 'rgb(0,0,0)');
+                }
+            });
+        }); 
+    </script>
+</body>
+</html>

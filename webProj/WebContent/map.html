@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>map.html</title>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <p>Value:</p>
+    <form action="">
+        <input type="text" name="name" id="" value="Kildong">
+        <input type="text" name="passwd" id="" value="1234">
+        <input type="text" name="age" id="" value="10">
+    </form>
+    <script>
+        $('p').append(
+        $('input').map(function(){ //map: 어떤 값을 리턴하겠다는 의미의 메소드
+            return $(this).val;
+        })).get().join(','); //get:값을 가져와 엘리멘트 속성으로 변환
+                             //join: 각각의 문자열로 변환
+    </script>
+</body>
+</html>
