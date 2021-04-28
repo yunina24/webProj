@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jq_event2_4.html</title>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <style>
+        #show {
+            background-color: lightcoral;
+            width: 300px;
+            height: 200px;
+        }
+
+        .item {
+            width: 50px;
+            height: 30px;
+            display: inline-block;
+            background-color: rgb(216, 252, 150);
+            border: 1px dotted greenyellow;
+        }
+    </style>
+    <script>
+        //입력이벤트
+        $(function () {
+            $('#name').keypress(function (e) {
+                if (e.keyCode == 13) {
+                    let inputVal = $(this).val();
+                    console.log(inputVal);
+                    $('#show').append($('<div />').html(inputVal).addClass('item'));
+                    $(this).val(''); //입력된 후 입력창 클린
+                }
+            });
+            //제거이벤트
+            $('#eman').bind('keydown', function (e) { 
+                if (e.keyCode == 13) {
+                    let iword = $(this).val(); //입력된 값 불러서 담는 변수 선언
+
+                    //$('#show div:contains('+iword+')').remove(); //일부 문자만 맞아도 삭제
+                    let contents = $('#show').contents(); //입력된 값 불러서 삭제
+                    for (let i = 0; i < contents.length; i++) { //입력되어 노출된 값이 새로 입력된 값과 같다면?
+                        if (contents[i].innerHTML == iword) {
+                            contents[i].remove();
+                        }
+                    }
+                    console.log(contents);
+
+                    $(this).val('');
+
+                }
+            });
+            $('#name').focus(); //focus();: 입력창에 커서 깜빡이는 이벤트 메소드
+        });
+    </script>
+</head>
+
+<body>
+    <input type="text" name="name" id="name">
+    <div id="show"></div>
+    <input type="text" name="eman" id="eman">
+</body>
+
+</html>

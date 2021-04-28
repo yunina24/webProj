@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jq_ajax4.html</title>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>
+    	$(document).ready(function(){
+            $.ajax({
+                url: '../ajax.html',
+                type: 'get', //get or post
+                data: 'p1=hell&p2=kill',
+                dataType: 'html',
+                success: function(recolve){
+                    console.log(recolve);
+                },
+                error: function(reject){
+                	window.alert(reject.statusText);
+                    console.log('에러코드: ${reject.status}, 에러메세지: ${reject.statusText}');
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+	<!-- get은 입력한 비밀번호나 아이디가 주소창에 뜬다, 반면 post는 정보를 body에 받기 때문에 주소창에 정보가 뜨지 않음 -->
+    <form action="memberServlet.do" method="post">
+        아이디: <input type="number" name="m_id" id="m_id" value="1" />
+        이 름: <input type="text" name="m_name" id="m_name" value="Kill" />
+        나 이: <input type="number" name="m_age" id="m_age" value="20" />
+        <input type="submit" value="저장" />
+        <input type="reset" value="취소" />
+    </form>
+    <div id='show'></div>
+</body>
+</html>
