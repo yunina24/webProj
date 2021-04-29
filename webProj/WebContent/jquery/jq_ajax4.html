@@ -9,24 +9,117 @@
     <script>
     	$(document).ready(function(){
             $.ajax({
-                url: '../ajax.html',
+                url: 'memberServlet.do',
                 type: 'get', //get or post
-                data: 'p1=hell&p2=kill',
-                dataType: 'html',
-                success: function(recolve){
-                    console.log(recolve);
-                },
+                //data: 'p1=hell&p2=kill',
+                dataType: 'json',
+                success: showList,
                 error: function(reject){
                 	window.alert(reject.statusText);
-                    console.log('에러코드: ${reject.status}, 에러메세지: ${reject.statusText}');
+                	console.log('에러코드 : ${reject.status}, 에러메세지 : ${reject.statusText}');
                 }
             });
+            //한건 입력작업 
+            $('#frm').on('submit', function(e){
+            	e.preventDefault(); //submit 기능을 취소, 서블릿페이지로 이동하지 않고 그 페이지에서 처리
+            	$.ajax({
+            		url: $('#frm').attr('action'), //=='memberServlet.do'
+            		data: 'm_id='+ $('#m_id').val() +'&m_name='+ $('#m_name').val() +'&m_age='+ $('#m_age').val(),
+            		dateType: 'json',
+            		type: 'post',
+            		success: createRow,
+            		error: function(err){
+            			console.log(err);
+            		}
+            	});
+            	
+            });
+            
+            
+            function showList(recolve){
+            	console.log(recolve);
+                let $table = $('<table id="tbl" />').attr('border', '1');
+                let $tr =  $('<tr />');
+                let $td1 =  $('<td />').html('<p>아이디</p>');
+                let $td2 =  $('<td />').html('<p>이름</p>');
+                let $td3 =  $('<td />').html('<p>나이</p>');
+                let $td4 =  $('<td />').html('<p>삭제</p>');
+                $tr.append($td1, $td2, $td3, $td4);
+                $table.append($tr);
+                for(let i = 0; i<recolve.length; i++){
+                	let $bt = $('<button />').html('삭제');
+                	$bt.click(buttonfnc);
+                	
+                	let $tr =  $('<tr />');
+                    let $td_id =  $('<td />').html(recolve[i].ID);
+                    let $td_na =  $('<td />').html(recolve[i].NAME);
+                    let $td_ag =  $('<td />').html(recolve[i].AGE);
+                    let $td_bt =  $('<td />').append($bt);
+
+
+                    $tr.append($td_id, $td_na, $td_ag, $td_bt);
+                    $table.append($tr);
+                	}
+                $('#show').append($table);
+            };
+            function createRow(result){
+            	console.log(result);
+    			//신규 입력된 데이타를 화면에 추가하여 출력해주기.
+            	let $table = $('#tbl');
+                 
+            	let $bt = $('<button />').html('삭제');
+             	$bt.click(buttonfnc);
+              
+             	let $trTag = $('<tr />');
+            	$trTag.append(
+                  	$('<td />').html(result.ID),
+                  	$('<td />').html(result.NAME),
+                  	$('<td />').html(result.AGE),
+                  	$('<td />').append($bt)
+               	);
+               
+               $table.append($trTag);
+               }
+
+    			/* let $table = $('<table />');
+            	let $bt = $('<button />').html('삭제');
+            	$bt.click(buttonfnc);
+            	
+            	let $tr1 =  $('<tr />');
+                let $td_id =  $('<td />').html(data.ID);
+                let $td_na =  $('<td />').html(data.NAME);
+                let $td_ag =  $('<td />').html(data.AGE);
+                let $td_bt =  $('<td />').append($bt);
+
+
+                $tr1.append($td_id, $td_na, $td_ag, $td_bt);
+                $table.append($tr1);
+            	
+            	$('#show').append($table);
+    			
+            	}; */
+            
+            function buttonfnc(){ //DB에서 데이타 삭제 기능
+            	console.log(this); //this => button
+            	let id = $(this).parent().parent().children().eq(0).html(); //테이블>tr>td>첫번째td>의 글자
+            	let trDel = $(this).parent().parent();
+            	$.ajax({
+            		url: 'delServlet',
+            		data: 'mid='+id,
+            		success: function(){
+            			trDel.remove();
+            		},
+            		error: function(err){
+            			console.log(err);
+            		}
+            	});
+            };
         });
     </script>
 </head>
 <body>
 	<!-- get은 입력한 비밀번호나 아이디가 주소창에 뜬다, 반면 post는 정보를 body에 받기 때문에 주소창에 정보가 뜨지 않음 -->
-    <form action="memberServlet.do" method="post">
+    <form id="frm" action="memberServlet.do" method="post">
         아이디: <input type="number" name="m_id" id="m_id" value="1" />
         이 름: <input type="text" name="m_name" id="m_name" value="Kill" />
         나 이: <input type="number" name="m_age" id="m_age" value="20" />
