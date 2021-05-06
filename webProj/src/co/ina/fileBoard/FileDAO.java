@@ -13,14 +13,58 @@ public class FileDAO {
 	Connection conn;
 	PreparedStatement psmt;
 	ResultSet rs;
-	
-	public List<FileVO> getFileList(){
+
+	public FileVO getFile(int num) { // num값으로 데이타 한건 조회..
+		conn = DBCon.getConnect();
+		FileVO file = new FileVO();
+		String SQL = "select * from file_board where num=?";
+		try {
+			psmt = conn.prepareStatement(SQL);
+			psmt.setInt(1, num);
+			rs = psmt.executeQuery();
+			if (rs.next()) {
+				file.setAuthor(rs.getString("author"));
+				file.setTitle(rs.getString("title"));
+				file.setFilename(rs.getString("file_name"));
+				file.setDay(rs.getString("day"));
+				file.setNum(rs.getInt("num"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (psmt != null) {
+				try {
+					psmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return file;
+	}
+
+	public List<FileVO> getFileList() {
 		conn = DBCon.getConnect();
 		List<FileVO> list = new ArrayList<FileVO>();
+		String SQL = "SELECT * FROM file_board";
 		try {
-			psmt = conn.prepareStatement("select * from file_board");
+			psmt = conn.prepareStatement(SQL);
 			rs = psmt.executeQuery();
-			while(rs.next()) {
+			while (rs.next()) {
 				FileVO vo = new FileVO();
 				vo.setAuthor(rs.getString("author"));
 				vo.setTitle(rs.getString("title"));
@@ -32,21 +76,21 @@ public class FileDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			if(rs != null) {
+			if (rs != null) {
 				try {
 					rs.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
 			}
-			if(psmt != null) {
+			if (psmt != null) {
 				try {
 					psmt.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
 			}
-			if(conn != null) {
+			if (conn != null) {
 				try {
 					conn.close();
 				} catch (SQLException e) {
@@ -56,25 +100,25 @@ public class FileDAO {
 		}
 		return list;
 	}
-	
+
 	public FileVO getInsertKeyVal(FileVO vo) {
 		conn = DBCon.getConnect();
-		//신규번호, 한 건 입력, 한 건 조회
-		String selectKey = "slelct nvl(max(num),0)+1 from file_board";
+		// 신규번호, 한 건 입력, 한 건 조회
+		String selectKey = "select nvl(max(num),0)+1 from file_board";
 		String insertSql = "insert into file_board values(?, ?, ?, ?, to_char(sysdate, 'YYYY-MM-DD'))";
-		String selectSql = "slelct * from file_board where num = ?";
-		
+		String selectSql = "select * from file_board where num = ?";
+
 		FileVO file = new FileVO();
 		int key = 0;
-		
+
 		try {
-			//키값 호출...
+			// 키값 호출...
 			psmt = conn.prepareStatement(selectKey);
 			rs = psmt.executeQuery();
-			if(rs.next()) {
+			if (rs.next()) {
 				key = rs.getInt(1);
 			}
-			//새로운 키값 입력...
+			// 새로운 키값 입력...
 			psmt = conn.prepareStatement(insertSql);
 			psmt.setInt(1, key);
 			psmt.setString(2, vo.getAuthor());
@@ -82,12 +126,12 @@ public class FileDAO {
 			psmt.setString(4, vo.getFilename());
 			int r = psmt.executeUpdate();
 			System.out.println(r + "건 입력되었습니다.");
-			
-			//신규 입력된 키값 전체정보 호출...
+
+			// 신규 입력된 키값 전체정보 호출...
 			psmt = conn.prepareStatement(selectSql);
 			psmt.setInt(1, key);
 			rs = psmt.executeQuery();
-			if(rs.next()) {
+			if (rs.next()) {
 				file.setNum(rs.getInt("num"));
 				file.setAuthor(rs.getString("author"));
 				file.setTitle(rs.getString("title"));
@@ -97,21 +141,21 @@ public class FileDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			if(rs != null) {
+			if (rs != null) {
 				try {
 					rs.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
 			}
-			if(psmt != null) {
+			if (psmt != null) {
 				try {
 					psmt.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
 			}
-			if(conn != null) {
+			if (conn != null) {
 				try {
 					conn.close();
 				} catch (SQLException e) {
